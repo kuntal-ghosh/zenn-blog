@@ -1,0 +1,44 @@
+{
+  "components": {
+    "auth": {
+      "container": {
+        "AuthContainer": "src/features/auth/components/container/AuthContainer.tsx"
+      },
+      "presentational": {
+        "LoginForm": "src/features/auth/components/presentational/LoginForm.tsx",
+        "RegisterForm": "src/features/auth/components/presentational/RegisterForm.tsx"
+      }
+    },
+    "blog": {
+      "container": {
+        "BlogPostContainer": "src/features/blog/components/container/BlogPostContainer.tsx",
+        "BlogListContainer": "src/features/blog/components/container/BlogListContainer.tsx"
+      },
+      "presentational": {
+        "BlogCard": "src/features/blog/components/presentational/BlogCard.tsx",
+        "BlogList": "src/features/blog/components/presentational/BlogList.tsx",
+        "BlogEditor": "src/features/blog/components/presentational/BlogEditor.tsx",
+        "CommentSection": "src/features/blog/components/presentational/CommentSection.tsx"
+      }
+    },
+    "user": {
+      "container": {
+        "ProfileContainer": "src/features/user/components/container/ProfileContainer.tsx"
+      },
+      "presentational": {
+        "ProfileForm": "src/features/user/components/presentational/ProfileForm.tsx"
+      }
+    },
+    "shared": {
+      "ui": {
+        "Button": "src/shared/components/ui/Button.tsx",
+        "Card": "src/shared/components/ui/Card.tsx",
+        "Input": "src/shared/components/ui/Input.tsx"
+      },
+      "layout": {
+        "Header": "src/shared/components/layout/Header.tsx",
+        "Footer": "src/shared/components/layout/Footer.tsx"
+      }
+    }
+  }
+}

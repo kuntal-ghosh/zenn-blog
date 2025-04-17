@@ -1,22 +1,3 @@
-// import React from "react";
-// import BlogListContainer from "@/features/blog/components/container/BlogListContainer";
-// import Header from "../shared/components/layout/Header";
-// import Footer from "../shared/components/layout/Footer";
-
-// const HomePage = () => {
-//   return (
-//     <div>
-//       <Header />
-//       <main className="container mx-auto p-4">
-//         <h1 className="text-4xl font-bold mb-4">Welcome to My Blog</h1>
-//         <BlogListContainer />
-//       </main>
-//       <Footer />
-//     </div>
-//   );
-// };
-
-// export default HomePage;
 import Image from "next/image";
 import Link from "next/link";
 import { Search, Bell, MessageSquare } from "lucide-react";
@@ -45,9 +26,9 @@ export default function HomePage({ searchParams }: HomePageProps) {
   const timeFilter = searchParams.time || "weekly";
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-white border-b">
+      {/* <header className="sticky top-0 z-10 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
         <div className="container flex items-center justify-between h-16 px-4 mx-auto">
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center">
@@ -101,11 +82,13 @@ export default function HomePage({ searchParams }: HomePageProps) {
             <Button className="bg-blue-500 hover:bg-blue-600">Post</Button>
           </div>
         </div>
-      </header>
+      </header> */}
 
       {/* Main Content */}
-      <main className="container px-4 py-6 mx-auto">
+      <div className="container px-4 py-6 mx-auto">
         <div className="max-w-3xl mx-auto">
+          {/* Tailwind Test Component */}
+
           {/* Content Type Tabs */}
           <ContentTabs />
 
@@ -159,11 +142,7 @@ export default function HomePage({ searchParams }: HomePageProps) {
 
           {/* Tech Section */}
           <section className="mt-12">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold">Tech</h2>
-              <TimeTabs />
-            </div>
-
+            <div className="flex items-center justify-between mb-6"></div>
             <div className="space-y-4">
               <ArticleCard
                 icon="🐤"
@@ -201,7 +180,7 @@ export default function HomePage({ searchParams }: HomePageProps) {
             </div>
           </section>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

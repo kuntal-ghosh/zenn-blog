@@ -291,3 +291,7 @@ function exampleFunction(param1, param2) {
  * 4. Returned structured response with both data and metadata
  */
 ```
+
+## Tailwind CSS Best Practices (v4.1.4+)
+
+This project uses Tailwind CSS v4.1.4 or higher. When writing CSS, follow these guidelines:

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "../../../shared/utils/db";
-import { User } from "../types";
+import { User } from "@/features/auth/types";
 import * as bcrypt from "bcrypt";
 
 export async function loginUser(

@@ -1,0 +1,34 @@
+{
+  "servers": {
+    "figma": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "figma-developer-mcp",
+        "--figma-api-key=figd_rn2T_jrgLIS861ROGBeKx_Wxlwv8TQICe3_Jud8-",
+        "--debug"
+      ]
+    },
+    "github": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "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"
+      }
+    },
+    "fetch": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "@modelcontextprotocol/inspector",
+        "uvx",
+        "mcp-server-fetch"
+      ]
+    }
+  
+  }
+}
+  

@@ -1,15 +1,9 @@
-import Image from "next/image";
-import Link from "next/link";
-import { Search, Bell, MessageSquare } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ArticleCard from "@/components/article-card";
 import ContentTabs from "@/components/content/content-tabs";
 import type { ContentType, TimeFilter } from "@/lib/types";
-import TimeTabs from "@/components/time-tabs";
 
 interface HomePageProps {
-  searchParams: {
+  readonly searchParams: {
     tab?: string;
     type?: ContentType;
     time?: TimeFilter;
@@ -21,75 +15,10 @@ interface HomePageProps {
  * Main page of the Zenn platform
  */
 export default function HomePage({ searchParams }: HomePageProps) {
-  // Extract search params with defaults
-  const contentType = searchParams.type || "articles";
-  const timeFilter = searchParams.time || "weekly";
-
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
-      {/* Header */}
-      {/* <header className="sticky top-0 z-10 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
-        <div className="container flex items-center justify-between h-16 px-4 mx-auto">
-          <div className="flex items-center gap-8">
-            <Link href="/" className="flex items-center">
-              <Image src="/logo.svg" alt="Zenn" width={100} height={30} />
-            </Link>
-
-            <nav className="hidden md:flex">
-              <Tabs defaultValue="explore">
-                <TabsList className="bg-transparent border-none">
-                  <TabsTrigger
-                    value="trending"
-                    className="data-[state=inactive]:text-gray-500 data-[state=active]:bg-transparent data-[state=active]:shadow-none"
-                  >
-                    Trending
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="following"
-                    className="data-[state=inactive]:text-gray-500 data-[state=active]:bg-transparent data-[state=active]:shadow-none"
-                  >
-                    Following
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value="explore"
-                    className="data-[state=inactive]:text-gray-500 data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:rounded-none"
-                  >
-                    Explore
-                  </TabsTrigger>
-                </TabsList>
-              </Tabs>
-            </nav>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" className="text-gray-500">
-              <Search className="w-5 h-5" />
-            </Button>
-            <Button variant="ghost" size="icon" className="text-gray-500">
-              <Bell className="w-5 h-5" />
-            </Button>
-            <Button variant="ghost" size="icon" className="text-gray-500">
-              <MessageSquare className="w-5 h-5" />
-            </Button>
-            <div className="w-8 h-8 overflow-hidden rounded-full bg-blue-500">
-              <Image
-                src="/placeholder.svg?height=32&width=32"
-                alt="Profile"
-                width={32}
-                height={32}
-              />
-            </div>
-            <Button className="bg-blue-500 hover:bg-blue-600">Post</Button>
-          </div>
-        </div>
-      </header> */}
-
-      {/* Main Content */}
       <div className="container px-4 py-6 mx-auto">
         <div className="max-w-3xl mx-auto">
-          {/* Tailwind Test Component */}
-
-          {/* Content Type Tabs */}
           <ContentTabs />
 
           {/* Recent Section */}
@@ -103,6 +32,7 @@ export default function HomePage({ searchParams }: HomePageProps) {
                 authorDetail="in Microsoft (volunteer)"
                 days={5}
                 comments={38}
+                slug="create-mcp-server-with-github-copilot"
               />
 
               <ArticleCard
@@ -111,6 +41,7 @@ export default function HomePage({ searchParams }: HomePageProps) {
                 author="Kandai"
                 days={11}
                 comments={25}
+                slug="building-website-without-css-margins"
               />
 
               <ArticleCard
@@ -119,6 +50,7 @@ export default function HomePage({ searchParams }: HomePageProps) {
                 author="nopee"
                 days={20}
                 comments={44}
+                slug="fixing-someone-who-is-late"
               />
 
               <ArticleCard
@@ -128,6 +60,7 @@ export default function HomePage({ searchParams }: HomePageProps) {
                 authorDetail="in Aldemy Tech Blog"
                 days={30}
                 comments={42}
+                slug="building-in-house-tools-with-deno"
               />
 
               <ArticleCard
@@ -136,6 +69,7 @@ export default function HomePage({ searchParams }: HomePageProps) {
                 author="O"
                 days={5}
                 comments={32}
+                slug="coding-with-mcp-router-claude-desktop"
               />
             </div>
           </section>
@@ -151,6 +85,7 @@ export default function HomePage({ searchParams }: HomePageProps) {
                 authorDetail="in Ubie Tech Blog"
                 days={5}
                 comments={1031}
+                slug="in-house-design-system-mcp-server"
               />
 
               <ArticleCard
@@ -159,6 +94,7 @@ export default function HomePage({ searchParams }: HomePageProps) {
                 author="Shizuka"
                 days={4}
                 comments={582}
+                slug="maximize-efficiency-ai-based-development"
               />
 
               <ArticleCard
@@ -168,6 +104,7 @@ export default function HomePage({ searchParams }: HomePageProps) {
                 authorDetail="in Smart Round Tech Blog"
                 days={7}
                 comments={165}
+                slug="implement-simple-homemade-mcp-server"
               />
 
               <ArticleCard
@@ -176,6 +113,7 @@ export default function HomePage({ searchParams }: HomePageProps) {
                 author="kamoocloud"
                 days={9}
                 comments={151}
+                slug="hashing-salt-and-pepper"
               />
             </div>
           </section>

@@ -74,4 +74,118 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: hsl(var(--foreground));
+}
+
+h1 {
+  font-size: 2.5rem; /* 40px */
+  letter-spacing: -0.025em;
+}
+
+h2 {
+  font-size: 2rem; /* 32px */
+  letter-spacing: -0.025em;
+}
+
+h3 {
+  font-size: 1.75rem; /* 28px */
+}
+
+h4 {
+  font-size: 1.5rem; /* 24px */
+}
+
+h5 {
+  font-size: 1.25rem; /* 20px */
+}
+
+h6 {
+  font-size: 1.125rem; /* 18px */
+}
+
+p {
+  margin-bottom: 1.25rem;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: hsl(var(--foreground));
+}
+
+.lead {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  color: hsl(var(--muted-foreground));
+}
+
+.small {
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.text-muted {
+  color: hsl(var(--muted-foreground));
+}
+
+/* Links */
+a {
+  color: hsl(var(--primary));
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: hsl(var(--primary) / 0.8);
+  text-decoration: underline;
+}
+
+/* List Typography */
+ul, ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.25rem;
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+/* Blockquotes */
+blockquote {
+  border-left: 4px solid hsl(var(--muted));
+  margin: 1.5rem 0;
+  padding: 0.5rem 0 0.5rem 1rem;
+  color: hsl(var(--muted-foreground));
+  font-style: italic;
+}
+
+/* Code inline */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background-color: hsl(var(--muted));
+  padding: 0.2em 0.4em;
+  border-radius: var(--radius);
+}
+
+/* Sticky Table of Contents */
+.toc-sticky {
+  position: sticky;
+  top: 2rem;
+}
+
+/* Add padding to headings for anchor offset */
+h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {
+  scroll-margin-top: 2rem;
+}
+
 /* Rest of your CSS remains unchanged */

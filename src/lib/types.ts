@@ -19,19 +19,25 @@ export interface ArticleMetrics {
 }
 
 export interface Article {
-  id: string
-  title: string
-  slug: string
-  content?: string
-  excerpt?: string
-  icon?: string
-  author: Author
-  publishedAt: string
-  daysAgo: number
-  metrics: ArticleMetrics
-  tags?: string[]
+  id: string;
+  slug: string;
+  title: string;
+  content: string;
+  icon: string;
+  author: {
+    name: string;
+    avatar?: string;
+    organization?: string;
+  };
+  daysAgo: number;
+  metrics: {
+    comments: number;
+    likes: number;
+  };
+  createdAt: string;
+  updatedAt: string;
 }
 
-export type ContentType = "articles" | "books" | "scraps"
-export type TimeFilter = "weekly" | "alltime"
+export type ContentType = "articles" | "questions" | "books";
+export type TimeFilter = "daily" | "weekly" | "monthly" | "yearly";
 export type NavigationTab = "trending" | "following" | "explore"

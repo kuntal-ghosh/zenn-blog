@@ -1,4 +1,4 @@
-import type { Article, ContentType, TimeFilter } from "@/lib/types"
+import type { Article, ContentType, TimeFilter } from "@/lib/types";
 // import { Article } from "./types";
 
 // Mock article data
@@ -6,8 +6,9 @@ const mockArticles: Article[] = [
   {
     id: "1",
     slug: "create-mcp-server-with-github-copilot",
-    title: "Create your own MCP server and use the GitHub Copilot Agent to create less readable class names",
-    content: `# Create your own MCP server with GitHub Copilot 
+    title:
+      "Create your own MCP server and use the GitHub Copilot Agent to create less readable class names",
+    content: `## Create your own MCP server with GitHub Copilot 
 
 Ever wondered how to create an MCP server that works seamlessly with GitHub Copilot? In this article, we'll explore the process step by step.
 Ever wondered how to create an MCP server that works seamlessly with GitHub Copilot? In this article, we'll explore the process step by step.
@@ -98,13 +99,13 @@ Here are some techniques I discovered...`,
 export class DataService {
   static async getArticles(): Promise<Article[]> {
     // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 100));
     return mockArticles;
   }
 
   static async getArticleBySlug(slug: string): Promise<Article | null> {
     // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 100));
-    return mockArticles.find(article => article.slug === slug) || null;
+    await new Promise((resolve) => setTimeout(resolve, 100));
+    return mockArticles.find((article) => article.slug === slug) || null;
   }
 }

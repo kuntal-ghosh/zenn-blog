@@ -17,12 +17,15 @@ interface ArticlePageProps {
 
 // Define heading components outside of the component
 const HeadingWithSeparator: React.FC<{
-  level: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  level: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   children: ReactNode;
 }> = ({ level: HeadingTag, children }) => {
-  if (!children || typeof children !== 'string') return null;
-  const id = children.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
-  
+  if (!children || typeof children !== "string") return null;
+  const id = children
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, "-");
+
   return (
     <div>
       <HeadingTag id={id}>
@@ -35,12 +38,24 @@ const HeadingWithSeparator: React.FC<{
 
 // Define custom component renderers outside of the main component
 const customComponents = {
-  h1: (props: any) => <HeadingWithSeparator level="h1">{props.children}</HeadingWithSeparator>,
-  h2: (props: any) => <HeadingWithSeparator level="h2">{props.children}</HeadingWithSeparator>,
-  h3: (props: any) => <HeadingWithSeparator level="h3">{props.children}</HeadingWithSeparator>,
-  h4: (props: any) => <HeadingWithSeparator level="h4">{props.children}</HeadingWithSeparator>,
-  h5: (props: any) => <HeadingWithSeparator level="h5">{props.children}</HeadingWithSeparator>,
-  h6: (props: any) => <HeadingWithSeparator level="h6">{props.children}</HeadingWithSeparator>,
+  h1: (props: any) => (
+    <HeadingWithSeparator level="h1">{props.children}</HeadingWithSeparator>
+  ),
+  h2: (props: any) => (
+    <HeadingWithSeparator level="h2">{props.children}</HeadingWithSeparator>
+  ),
+  h3: (props: any) => (
+    <HeadingWithSeparator level="h3">{props.children}</HeadingWithSeparator>
+  ),
+  h4: (props: any) => (
+    <HeadingWithSeparator level="h4">{props.children}</HeadingWithSeparator>
+  ),
+  h5: (props: any) => (
+    <HeadingWithSeparator level="h5">{props.children}</HeadingWithSeparator>
+  ),
+  h6: (props: any) => (
+    <HeadingWithSeparator level="h6">{props.children}</HeadingWithSeparator>
+  ),
 };
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
@@ -76,31 +91,63 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
               {article.title}
             </h1>
-            <p className="text-gray-500 mb-6">Published On: {article.createdAt}</p>
+            <p className="text-gray-500 mb-6">
+              Published On: {article.createdAt}
+            </p>
 
             <div className="flex flex-wrap gap-2 mb-6">
-              <Badge variant="outline" className="flex items-center gap-1 bg-white">
-                <span className="bg-black text-white rounded-full p-1 text-xs">N</span>
+              <Badge
+                variant="outline"
+                className="flex items-center gap-1 bg-white"
+              >
+                <span className="bg-black text-white rounded-full p-1 text-xs">
+                  N
+                </span>
                 <span>Next.js</span>
               </Badge>
-              <Badge variant="outline" className="flex items-center gap-1 bg-white">
-                <span className="bg-blue-400 text-white rounded-full p-1 text-xs">⚛</span>
+              <Badge
+                variant="outline"
+                className="flex items-center gap-1 bg-white"
+              >
+                <span className="bg-blue-400 text-white rounded-full p-1 text-xs">
+                  ⚛
+                </span>
                 <span>React</span>
               </Badge>
-              <Badge variant="outline" className="flex items-center gap-1 bg-white">
-                <span className="bg-blue-600 text-white rounded-full p-1 text-xs">TS</span>
+              <Badge
+                variant="outline"
+                className="flex items-center gap-1 bg-white"
+              >
+                <span className="bg-blue-600 text-white rounded-full p-1 text-xs">
+                  TS
+                </span>
                 <span>TypeScript</span>
               </Badge>
-              <Badge variant="outline" className="flex items-center gap-1 bg-white">
-                <span className="bg-gray-200 text-gray-700 rounded-full p-1 text-xs">#</span>
+              <Badge
+                variant="outline"
+                className="flex items-center gap-1 bg-white"
+              >
+                <span className="bg-gray-200 text-gray-700 rounded-full p-1 text-xs">
+                  #
+                </span>
                 <span>design</span>
               </Badge>
-              <Badge variant="outline" className="flex items-center gap-1 bg-white">
-                <span className="bg-blue-500 text-white rounded-full p-1 text-xs">□</span>
+              <Badge
+                variant="outline"
+                className="flex items-center gap-1 bg-white"
+              >
+                <span className="bg-blue-500 text-white rounded-full p-1 text-xs">
+                  □
+                </span>
                 <span>frontend</span>
               </Badge>
-              <Badge variant="outline" className="flex items-center gap-1 bg-white">
-                <span className="bg-yellow-400 text-white rounded-full p-1 text-xs">≡</span>
+              <Badge
+                variant="outline"
+                className="flex items-center gap-1 bg-white"
+              >
+                <span className="bg-yellow-400 text-white rounded-full p-1 text-xs">
+                  ≡
+                </span>
                 <span>Tech</span>
               </Badge>
             </div>
@@ -117,22 +164,32 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             <div className="sticky top-32">
               {/* Author Profile Card */}
               <Card className="mb-8">
-                <CardContent className="pt-4">
+                <CardContent className="">
                   <div className="flex flex-col items-center">
-                    <div className="flex items-start mb-2">
-                      <h2 className="text-xl font-semibold ">Yoshiko</h2>
-                      <Button variant="outline" className="mb-2">
-                        Follow
-                      </Button>
-                    </div>
-
-                    <div className="flex gap-2 mb-2">
-                      <Link href="#" className="text-gray-500 hover:text-gray-700">
-                        <Github className="h-5 w-5" />
-                      </Link>
-                      <Link href="#" className="text-gray-500 hover:text-gray-700">
-                        <Twitter className="h-5 w-5" />
-                      </Link>
+                    <div className="flex items-center justify-between gap-x-4">
+                      <span>Image</span>
+                      <div className="flex flex-col  mb-2">
+                        <h2 className="text-xl font-semibold ">Yoshiko</h2>
+                        <div className="flex items-center gap-2 mb-2">
+                          <Button variant="outline" className="mb-2">
+                            Follow
+                          </Button>
+                          <div className="flex gap-2 mb-2">
+                            <Link
+                              href="#"
+                              className="text-gray-500 hover:text-gray-700"
+                            >
+                              <Github className="h-5 w-5" />
+                            </Link>
+                            <Link
+                              href="#"
+                              className="text-gray-500 hover:text-gray-700"
+                            >
+                              <Twitter className="h-5 w-5" />
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
                     </div>
 
                     <div className=" w-full text-sm">
@@ -140,16 +197,24 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                         <span className="text-gray-700">💼</span>
                         <span>
                           Front-end Engineer @{" "}
-                          <Link href="https://kwork.studio" className="text-blue-500 hover:underline">
+                          <Link
+                            href="https://kwork.studio"
+                            className="text-blue-500 hover:underline"
+                          >
                             kwork.studio
                           </Link>
                         </span>
                       </p>
                     </div>
 
-                    <Button className="w-full mt-2 bg-blue-500 hover:bg-blue-600">Give a badge</Button>
+                    <Button className="w-full mt-2 bg-blue-500 hover:bg-blue-600">
+                      Give a badge
+                    </Button>
 
-                    <Link href="#" className="text-sm text-gray-500 mt-2 flex items-center">
+                    <Link
+                      href="#"
+                      className="text-sm text-gray-500 mt-2 flex items-center"
+                    >
                       What is a badge giver? <span className="ml-1">→</span>
                     </Link>
                   </div>

@@ -17,7 +17,8 @@ export function TableOfContents({ content }: TableOfContentsProps) {
   const [activeItem, setActiveItem] = useState<string | null>(null);
 
   // Extract headings from markdown content
-  const headings = content.split("\n")
+  const headings = content
+    .split("\n")
     .filter((line) => line.startsWith("#"))
     .map((line) => {
       const level = line.match(/^#+/)?.[0].length || 0;
@@ -42,7 +43,9 @@ export function TableOfContents({ content }: TableOfContentsProps) {
 
   return (
     <div className="bg-white rounded-lg p-6 shadow-sm">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">Table of Contents</h2>
+      <h2 className="text-2xl font-bold text-gray-800 mb-4">
+        Table of Contents
+      </h2>
       <div className="relative ml-1.5">
         {/* Vertical line */}
         <div className="absolute left-[7px] top-2 bottom-2 w-0.5 bg-gray-200" />
@@ -52,7 +55,7 @@ export function TableOfContents({ content }: TableOfContentsProps) {
             <li key={index} className="relative">
               <Link
                 href={`#${heading.slug}`}
-                className="flex items-center group"
+                className="flex items-center group pl-4"
                 onClick={(e) => {
                   e.preventDefault();
                   handleItemClick(heading.slug);
@@ -60,7 +63,7 @@ export function TableOfContents({ content }: TableOfContentsProps) {
               >
                 {/* Circle indicator */}
                 <span
-                  className={`block w-4 h-4 rounded-full z-10 ${
+                  className={`block w-4 h-4 rounded-full z-10 absolute left-0 top-1.5 ${
                     activeItem === heading.slug
                       ? "bg-blue-500"
                       : "bg-white border-2 border-blue-200"

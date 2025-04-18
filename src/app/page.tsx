@@ -1,6 +1,9 @@
 import ArticleCard from "@/components/article-card";
 import ContentTabs from "@/components/content/content-tabs";
 import type { ContentType, TimeFilter } from "@/lib/types";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { PenLine } from "lucide-react";
 
 interface HomePageProps {
   readonly searchParams: {
@@ -19,7 +22,15 @@ export default function HomePage({ searchParams }: HomePageProps) {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
       <div className="container px-4 py-6 mx-auto">
         <div className="max-w-3xl mx-auto">
-          <ContentTabs />
+          <div className="flex items-center justify-between mb-6">
+            <ContentTabs />
+            <Link href="/write">
+              <Button className="flex items-center gap-2">
+                <PenLine size={16} />
+                <span>Create Post</span>
+              </Button>
+            </Link>
+          </div>
 
           {/* Recent Section */}
           <section className="mt-8">

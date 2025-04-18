@@ -80,7 +80,12 @@ html {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-sans);
   font-weight: 700;
   line-height: 1.2;
@@ -150,9 +155,10 @@ a:hover {
 }
 
 /* List Typography */
-ul, ol {
+ul,
+ol {
   margin-bottom: 1.25rem;
-  padding-left: 1.25rem;
+  /* padding-left: 1.25rem; */
 }
 
 li {
@@ -184,7 +190,12 @@ code {
 }
 
 /* Add padding to headings for anchor offset */
-h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {
+h1[id],
+h2[id],
+h3[id],
+h4[id],
+h5[id],
+h6[id] {
   scroll-margin-top: 2rem;
 }
 

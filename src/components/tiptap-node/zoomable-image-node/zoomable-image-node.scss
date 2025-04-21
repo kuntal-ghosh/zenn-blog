@@ -1,0 +1,33 @@
+.tiptap.ProseMirror {
+  // Zoomable image styling
+  .tiptap-zoomable-image {
+    margin: 2rem 0;
+    display: inline-block;
+    max-width: 100%;
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: var(--tt-radius-xs, 0.25rem);
+      transition: filter 0.2s ease;
+      
+      &:hover {
+        filter: brightness(1.03);
+      }
+    }
+
+    &.selected img,
+    &:focus-visible img,
+    &:focus img {
+      outline: 2px solid var(--tt-brand-color-500);
+    }
+  }
+
+  // Handle editor selection state
+  &.ProseMirror-focused .ProseMirror-selectednode .tiptap-zoomable-image {
+    img {
+      outline: 2px solid var(--tt-brand-color-500);
+    }
+  }
+}

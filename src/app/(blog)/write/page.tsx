@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import BlogEditor from "@/features/blog/components/presentational/BlogEditor";
 import { toast } from "@/components/ui/use-toast";
+import { SimpleEditor } from '@/components/tiptap-templates/simple/simple-editor';
 
 /**
  * Feature: Article Editor Page
@@ -63,31 +64,32 @@ const WritePage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 py-8">
-      <div className="container px-4 mx-auto">
-        <div className="max-w-3xl mx-auto">
-          <header className="mb-8">
-            <h1 className="text-3xl font-bold">Write a New Article</h1>
-            <p className="text-slate-500 dark:text-slate-400 mt-2">
-              Share your knowledge and ideas with the community
-            </p>
-          </header>
+    // <div className="min-h-screen bg-slate-50 dark:bg-slate-900 py-8">
+    //   <div className="container px-4 mx-auto">
+    //     <div className="max-w-3xl mx-auto">
+    //       <header className="mb-8">
+    //         <h1 className="text-3xl font-bold">Write a New Article</h1>
+    //         <p className="text-slate-500 dark:text-slate-400 mt-2">
+    //           Share your knowledge and ideas with the community
+    //         </p>
+    //       </header>
 
-          <div className="bg-white dark:bg-slate-800 rounded-lg shadow-sm p-6">
-            <BlogEditor
-              onSubmit={handleSubmit}
-              initialData={{
-                title: "",
-                content: "",
-                category: "technology",
-                coverImage: "",
-                tags: [],
-              }}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+    //       <div className="bg-white dark:bg-slate-800 rounded-lg shadow-sm p-6">
+    //         <BlogEditor
+    //           onSubmit={handleSubmit}
+    //           initialData={{
+    //             title: "",
+    //             content: "",
+    //             category: "technology",
+    //             coverImage: "",
+    //             tags: [],
+    //           }}
+    //         />
+    //       </div>
+    //     </div>
+    //   </div>
+    // </div>
+    <SimpleEditor/>
   );
 };
 

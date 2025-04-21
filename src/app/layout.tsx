@@ -1,34 +1,19 @@
-// import React, { JSX } from 'react';
-// import  Header  from '@/shared/components/layout/Header';
-// import  Footer  from '../shared/components/layout/Footer';
-
-// const RootLayout = ({ children }: { children: React.ReactNode }) => {
-//   return (
-//     <html lang="en">
-//       <body className="bg-gray-100">
-//         <Header />
-//         <main>{children}</main>
-//         <Footer />
-//       </body>
-//     </html>
-//   );
-// };
-
-// export default RootLayout;
-
 import type React from "react";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import { Inter as FontSans } from "next/font/google";
+import { cn } from "@/lib/utils";
+import "@/app/globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Header from "@/components/layout/header";
-import Navigation from "@/components/layout/navigation";
 
-const inter = Inter({ subsets: ["latin"] });
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 export const metadata: Metadata = {
-  title: "Zenn - Tech Articles and Knowledge Sharing",
-  description: "A platform for developers to share knowledge and insights",
+  title: "Zenn Blog",
+  description: "Technical blog platform for developers",
 };
 
 export default function RootLayout({
@@ -38,17 +23,45 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <head>
+        {/* Script to prevent flash of incorrect theme */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  const savedTheme = localStorage.getItem('theme');
+                  if (
+                    savedTheme === 'dark' ||
+                    (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
+                  ) {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {
+                  console.error('Error applying theme:', e);
+                }
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body
+        className={cn(
+          "min-h-screen  font-sans ",
+          fontSans.variable
+        )}
+      >
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
           <div className="flex min-h-screen flex-col">
-            <Header />
-            <Navigation />
-            <main className="flex-1 bg-slate-50">{children}</main>
+              <Header />
+            <main className="flex-1 z-1">{children}</main>
           </div>
         </ThemeProvider>
       </body>

@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -12,6 +11,8 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import RichTextEditor from "@/components/RichTextEditor";
+import { sanitizeHtml } from "@/lib/utils";
 
 interface BlogEditorProps {
   onSubmit: (blogData: {
@@ -50,9 +51,13 @@ const BlogEditor: React.FC<BlogEditorProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Sanitize the HTML content before submission
+    const sanitizedContent = sanitizeHtml(content);
+    
     onSubmit({
       title,
-      content,
+      content: sanitizedContent,
       category,
       coverImage,
       tags,
@@ -68,20 +73,6 @@ const BlogEditor: React.FC<BlogEditorProps> = ({
 
   const removeTag = (tagToRemove: string) => {
     setTags(tags.filter((tag) => tag !== tagToRemove));
-  };
-
-  // Simple preview of markdown content
-  const renderPreview = () => {
-    return (
-      <div className="prose dark:prose-invert max-w-none">
-        <h1>{title}</h1>
-        <div>
-          {content.split("\n").map((paragraph, i) => (
-            <p key={i}>{paragraph}</p>
-          ))}
-        </div>
-      </div>
-    );
   };
 
   return (
@@ -198,7 +189,7 @@ const BlogEditor: React.FC<BlogEditorProps> = ({
           )}
         </div>
 
-        {/* Content Editor with Tabs */}
+        {/* Content Editor with TipTap Rich Text Editor */}
         <div>
           <label className="block text-sm font-medium mb-1">Content</label>
           <Card>
@@ -213,18 +204,19 @@ const BlogEditor: React.FC<BlogEditorProps> = ({
               </TabsList>
               <CardContent className="p-4">
                 <TabsContent value="edit" className="mt-0">
-                  <Textarea
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    placeholder="Write your article content here... (Markdown supported)"
-                    className="min-h-[300px] w-full resize-y"
-                    required
+                  <RichTextEditor
+                    content={content}
+                    onChange={setContent}
+                    placeholder="Write your article content here..."
                   />
                 </TabsContent>
                 <TabsContent value="preview" className="mt-0">
                   <div className="min-h-[300px] border rounded-md p-4 overflow-auto">
                     {content ? (
-                      renderPreview()
+                      <div 
+                        className="prose dark:prose-invert max-w-none" 
+                        dangerouslySetInnerHTML={{ __html: sanitizeHtml(content) }}
+                      />
                     ) : (
                       <p className="text-slate-500 dark:text-slate-400">
                         Preview will appear here

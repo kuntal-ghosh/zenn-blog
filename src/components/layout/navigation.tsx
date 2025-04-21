@@ -23,17 +23,17 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="sticky top-16 border-b bg-white z-10 shadow-sm ">
+    <nav className="sticky top-16 border-b z-50 ">
       <div className="container mx-auto">
         <Tabs
           value={currentTab}
           onValueChange={handleTabChange}
           className="w-full"
         >
-          <TabsList className="grid w-full max-w-xs grid-cols-3">
-            <TabsTrigger value="trending">Trending</TabsTrigger>
-            <TabsTrigger value="following">Following</TabsTrigger>
-            <TabsTrigger value="explore">Explore</TabsTrigger>
+          <TabsList className="grid w-full max-w-xs grid-cols-3 ">
+            <TabsTrigger value="trending" className="">Trending</TabsTrigger>
+            <TabsTrigger value="following" className="">Following</TabsTrigger>
+            <TabsTrigger value="explore" className="">Explore</TabsTrigger>
           </TabsList>
         </Tabs>
       </div>

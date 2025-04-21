@@ -4,6 +4,7 @@ import type { ContentType, TimeFilter } from "@/lib/types";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { PenLine } from "lucide-react";
+import Navigation from "@/components/layout/navigation";
 
 interface HomePageProps {
   readonly searchParams: {
@@ -19,7 +20,9 @@ interface HomePageProps {
  */
 export default function HomePage({ searchParams }: HomePageProps) {
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <>
+      <Navigation />
+    <div className="min-h-screen z-1 ">
       <div className="container px-4 py-6 mx-auto">
         <div className="max-w-3xl mx-auto">
           <div className="flex items-center justify-between mb-6">
@@ -131,5 +134,6 @@ export default function HomePage({ searchParams }: HomePageProps) {
         </div>
       </div>
     </div>
+    </>
   );
 }

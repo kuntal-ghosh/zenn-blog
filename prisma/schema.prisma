@@ -25,13 +25,14 @@ model User {
   updatedAt     DateTime  @updatedAt
   posts         Post[]
   comments      Comment[]
+  images        Image[]   // Add the relation to Image model
 }
 
 model Post {
   id            String    @id @default(cuid())
   title         String
   slug          String    @unique
-  content       String
+  content       Json      // Changed from String to Json for TipTap content
   published     Boolean   @default(false)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -56,4 +57,20 @@ model Tag {
   id            String    @id @default(cuid())
   name          String    @unique
   posts         Post[]    @relation("PostToTag")
+}
+
+// Adding new model to store image metadata
+model Image {
+  id            String    @id @default(cuid())
+  url           String
+  thumbnailUrl  String?
+  alt           String?
+  width         Int
+  height        Int
+  size          Int
+  mimeType      String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  uploadedBy    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String
 }

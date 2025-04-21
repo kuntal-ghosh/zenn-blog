@@ -5,7 +5,7 @@ import LoginForm from "../presentational/LoginForm";
 import RegisterForm from "../presentational/RegisterForm";
 
 const AuthContainer: React.FC = () => {
-  const { isAuthenticated, login, register } = useAuth();
+  const { isAuthenticated, login, register,loading } = useAuth();
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
@@ -14,7 +14,7 @@ const AuthContainer: React.FC = () => {
       ) : (
         <div className="w-full max-w-md">
           <h2 className="text-2xl mb-4">Login or Register</h2>
-          <LoginForm onLogin={login} />
+          <LoginForm onSubmit={login} />
           <RegisterForm onRegister={register} />
         </div>
       )}

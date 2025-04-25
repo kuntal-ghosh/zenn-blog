@@ -292,6 +292,176 @@ function exampleFunction(param1, param2) {
  */
 ```
 
+## Clean Architecture Guidelines
+
+When working with our project's clean architecture structure, adhere to these principles:
+
+1. **Domain Layer** (`src/core/domain`):
+   - Implement business entities as plain TypeScript classes with no external dependencies
+   - Define domain interfaces and value objects that represent core business concepts
+   - Keep business logic isolated from framework-specific code
+   - Use proper validation and ensure domain invariants are maintained
+
+2. **Application Layer** (`src/core/application`):
+   - Implement use cases as classes that orchestrate domain entities
+   - Define repository interfaces and service interfaces as ports
+   - Keep application services framework-independent
+   - Follow the Dependency Inversion Principle by depending on abstractions
+
+3. **Infrastructure Layer** (`src/infrastructure`):
+   - Implement concrete repository classes that fulfill repository interfaces
+   - Handle database connections, external API calls, and third-party services
+   - Adapt external interfaces to match application needs (Adapter Pattern)
+   - Encapsulate framework-specific code
+
+4. **Features Layer** (`src/features`):
+   - Organize code by business feature rather than technical concerns
+   - Keep feature-specific components, hooks, and utilities together
+   - Design clear boundaries between features
+   - Use well-defined interfaces for inter-feature communication
+
+5. **API Routes** (`src/app/api`):
+   - Use adapters to connect API routes with application use cases
+   - Implement proper validation of incoming requests
+   - Handle authentication and authorization consistently
+   - Return standardized responses with appropriate status codes
+
+## Clean Architecture Code Example
+
+```typescript
+/**
+ * Example: Blog post management using Clean Architecture
+ */
+
+// Domain Entity - src/core/domain/entities/Post.ts
+export class Post {
+  constructor(
+    public readonly id: string,
+    public title: string,
+    public content: Record<string, any>,
+    public authorId: string,
+    public readonly createdAt: Date,
+    public updatedAt: Date,
+    public published: boolean = false,
+    public tags: string[] = []
+  ) {}
+
+  publish(): void {
+    if (!this.title) throw new Error("Cannot publish post without title");
+    this.published = true;
+    this.updatedAt = new Date();
+  }
+
+  update(data: Partial<Post>): void {
+    if (data.title !== undefined) this.title = data.title;
+    if (data.content !== undefined) this.content = data.content;
+    if (data.tags !== undefined) this.tags = data.tags;
+    if (data.published !== undefined) this.published = data.published;
+    this.updatedAt = new Date();
+  }
+}
+
+// Repository Interface - src/core/application/interfaces/PostRepository.ts
+import { Post } from '../../domain/entities/Post';
+
+export interface PostRepository {
+  findById(id: string): Promise<Post | null>;
+  findAll(options?: { authorId?: string; published?: boolean }): Promise<Post[]>;
+  create(post: Post): Promise<Post>;
+  update(post: Post): Promise<Post>;
+  delete(id: string): Promise<void>;
+}
+
+// Use Case - src/core/application/use-cases/post/UpdatePostUseCase.ts
+import { Post } from '../../../domain/entities/Post';
+import { PostRepository } from '../../interfaces/PostRepository';
+import { PostUpdateDTO } from '../../dto/PostDTO';
+import { NotFoundError } from '../../../domain/errors/NotFoundError';
+
+export class UpdatePostUseCase {
+  constructor(private postRepository: PostRepository) {}
+
+  async execute(id: string, data: PostUpdateDTO, userId: string): Promise<Post> {
+    // Get existing post
+    const post = await this.postRepository.findById(id);
+    if (!post) throw new NotFoundError(`Post with ID ${id} not found`);
+    
+    // Verify ownership
+    if (post.authorId !== userId) {
+      throw new Error('Unauthorized: You do not own this post');
+    }
+    
+    // Update post
+    post.update(data);
+    
+    // Save and return
+    return this.postRepository.update(post);
+  }
+}
+
+// Repository Implementation - src/infrastructure/repositories/PrismaPostRepository.ts
+import { PrismaClient } from '@prisma/client';
+import { Post } from '../../core/domain/entities/Post';
+import { PostRepository } from '../../core/application/interfaces/PostRepository';
+
+export class PrismaPostRepository implements PostRepository {
+  constructor(private prisma: PrismaClient) {}
+
+  async findById(id: string): Promise<Post | null> {
+    const post = await this.prisma.post.findUnique({ where: { id } });
+    if (!post) return null;
+    
+    return new Post(
+      post.id,
+      post.title,
+      post.content,
+      post.authorId,
+      post.createdAt,
+      post.updatedAt,
+      post.published,
+      post.tags
+    );
+  }
+  
+  // Other methods implementation...
+}
+
+// API Route - src/app/api/blog/posts/[id]/route.ts
+import { NextRequest, NextResponse } from 'next/server';
+import { auth } from '@/lib/auth';
+import { prisma } from '@/infrastructure/database/prisma-client';
+import { PrismaPostRepository } from '@/infrastructure/repositories/PrismaPostRepository';
+import { UpdatePostUseCase } from '@/core/application/use-cases/post/UpdatePostUseCase';
+import { withErrorHandling } from '@/lib/middleware/with-error-handling';
+import { UnauthorizedError, NotFoundError } from '@/types/errors';
+
+export const PATCH = withErrorHandling(async (
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) => {
+  // Get authenticated user
+  const session = await auth();
+  if (!session?.user) throw new UnauthorizedError();
+  
+  // Parse request data
+  const updateData = await request.json();
+  
+  // Set up use case with dependencies
+  const postRepository = new PrismaPostRepository(prisma);
+  const updatePostUseCase = new UpdatePostUseCase(postRepository);
+  
+  // Execute use case
+  const updatedPost = await updatePostUseCase.execute(
+    params.id,
+    updateData,
+    session.user.id
+  );
+  
+  // Return response
+  return NextResponse.json(updatedPost);
+});
+```
+
 ## Tailwind CSS Best Practices (v4.1.4+)
 
 This project uses Tailwind CSS v4.1.4 or higher. When writing CSS, follow these guidelines:

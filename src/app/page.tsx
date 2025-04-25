@@ -5,6 +5,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { PenLine } from "lucide-react";
 import Navigation from "@/components/layout/navigation";
+import { PostListResponseDTO } from "@/core/application/dto/post-dto";
+import { Key } from "react";
 
 interface HomePageProps {
   readonly searchParams: {
@@ -14,126 +16,119 @@ interface HomePageProps {
   };
 }
 
+async function getPosts(
+  page: number = 1,
+  limit: number = 50,
+  tag?: string
+): Promise<any> {
+  try {
+    // Construct query parameters
+    const params = new URLSearchParams();
+    params.set("page", page.toString());
+    params.set("limit", limit.toString());
+    params.set("published", "true"); // Only show published posts
+    
+    if (tag) {
+      params.set("tag", tag);
+    }
+    
+    // In a real implementation, we would use a repository or service
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/blog/posts?${params.toString()}`,
+      {
+        // next: { revalidate: false }, // Revalidate every minute
+      }
+    );
+    
+    if (!res.status ) {
+      throw new Error("Failed to fetch posts");
+    }
+    const {data} = await res.json();
+    
+    return data?.posts;
+  } catch (error) {
+    console.error("Failed to fetch posts:", error);
+    // Return empty response as fallback
+    return {
+      posts: [],
+      total: 0,
+      page,
+      limit,
+      totalPages: 0,
+    };
+  }
+}
+
+/**
+ * Utility function to calculate days since a date
+ */
+function getDaysSince(dateString: string): number {
+  const postDate = new Date(dateString);
+  const today = new Date();
+  const diffTime = Math.abs(today.getTime() - postDate.getTime());
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+  return diffDays;
+}
+
 /**
  * HomePage component
  * Main page of the Zenn platform
  */
-export default function HomePage({ searchParams }: HomePageProps) {
+export default async function HomePage({ searchParams }: HomePageProps) {
+  let page = 1;
+  let limit = 50;
+
+  // Fetch posts from API
+  const posts = await getPosts(page, limit);
+  console.log("🚀 ~ HomePage ~ response:", posts)
+  // const { posts  } = response;
+
   return (
     <>
       <Navigation />
-    <div className="min-h-screen z-1 ">
-      <div className="container px-4 py-6 mx-auto">
-        <div className="max-w-3xl mx-auto">
-          <div className="flex items-center justify-between mb-6">
-            <ContentTabs />
-            <Link href="/write">
-              <Button className="flex items-center gap-2">
-                <PenLine size={16} />
-                <span>Create Post</span>
-              </Button>
-            </Link>
+      <div className="min-h-screen z-1">
+        <div className="container px-4 py-6 mx-auto">
+          <div className="max-w-3xl mx-auto">
+            <div className="flex items-center justify-between mb-6">
+              <ContentTabs />
+              <Link href="/write">
+                <Button className="flex items-center gap-2">
+                  <PenLine size={16} />
+                  <span>Create Post</span>
+                </Button>
+              </Link>
+            </div>
+
+            {/* Recent Section */}
+            <section className="mt-8">
+              <h2 className="mb-6 text-2xl font-bold">Recent</h2>
+              <div className="space-y-4">
+                {posts.length > 0 ? (
+                  posts.map((post: { id: Key | null | undefined; title: string; author: { name: any; bio: any; }; createdAt: string; comments: string | any[]; slug: string; }) => (
+                    <ArticleCard
+                      key={post.id}
+                      icon="📝" // You might want to make this dynamic based on post content/category
+                      title={post.title}
+                      author={post.author?.name || "Anonymous"}
+                      authorDetail={post.author?.bio ? `in ${post.author.bio}` : undefined}
+                      days={post.createdAt ? getDaysSince(post.createdAt) : 0}
+                      comments={post.comments?.length || 0}
+                      slug={post.slug}
+                    />
+                  ))
+                ) : (
+                  <div className="text-center py-8 text-gray-500">
+                    No posts found. Create your first post!
+                  </div>
+                )}
+              </div>
+            </section>
+
+            {/* If you want to keep the Tech section with hardcoded data, you can leave it */}
+            {/* Or remove it if you want to only show dynamic content */}
           </div>
-
-          {/* Recent Section */}
-          <section className="mt-8">
-            <h2 className="mb-6 text-2xl font-bold">Recent</h2>
-            <div className="space-y-4">
-              <ArticleCard
-                icon="👨‍💻"
-                title="Create your own MCP server and use the GitHub Copilot Agent to create less readable class names"
-                author="Kandi Ota"
-                authorDetail="in Microsoft (volunteer)"
-                days={5}
-                comments={38}
-                slug="create-mcp-server-with-github-copilot"
-              />
-
-              <ArticleCard
-                icon="🖌️"
-                title="I tried building a website without using CSS margins"
-                author="Kandai"
-                days={11}
-                comments={25}
-                slug="building-website-without-css-margins"
-              />
-
-              <ArticleCard
-                icon="😊"
-                title="Fixing someone who is late even though you knew they were going to be late 2 minutes before the meeting"
-                author="nopee"
-                days={20}
-                comments={44}
-                slug="fixing-someone-who-is-late"
-              />
-
-              <ArticleCard
-                icon="📝"
-                title="Building in-house tools with Deno"
-                author="TechThinker"
-                authorDetail="in Aldemy Tech Blog"
-                days={30}
-                comments={42}
-                slug="building-in-house-tools-with-deno"
-              />
-
-              <ArticleCard
-                icon="✈️"
-                title="Coding with MCP Router × Claude Desktop"
-                author="O"
-                days={5}
-                comments={32}
-                slug="coding-with-mcp-router-claude-desktop"
-              />
-            </div>
-          </section>
-
-          {/* Tech Section */}
-          <section className="mt-12">
-            <div className="flex items-center justify-between mb-6"></div>
-            <div className="space-y-4">
-              <ArticleCard
-                icon="🐤"
-                title="By making our in-house design system on MCP server, UI implementation became extremely..."
-                author="Goriko"
-                authorDetail="in Ubie Tech Blog"
-                days={5}
-                comments={1031}
-                slug="in-house-design-system-mcp-server"
-              />
-
-              <ArticleCard
-                icon="🔥"
-                title="Write down everything you do to maximize the efficiency of AI-based development"
-                author="Shizuka"
-                days={4}
-                comments={582}
-                slug="maximize-efficiency-ai-based-development"
-              />
-
-              <ArticleCard
-                icon="🧑‍💻"
-                title="How to implement a simple homemade MCP server for trial"
-                author="kamasaaba"
-                authorDetail="in Smart Round Tech Blog"
-                days={7}
-                comments={165}
-                slug="implement-simple-homemade-mcp-server"
-              />
-
-              <ArticleCard
-                icon="📘"
-                title="Hashing alone is no longer an option: Salt and pepper"
-                author="kamoocloud"
-                days={9}
-                comments={151}
-                slug="hashing-salt-and-pepper"
-              />
-            </div>
-          </section>
         </div>
       </div>
-    </div>
     </>
   );
 }

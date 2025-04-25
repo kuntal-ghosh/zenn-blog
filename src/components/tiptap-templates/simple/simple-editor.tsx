@@ -104,6 +104,7 @@ interface SimpleEditorProps {
   editor?: Editor | null;
   content?: any;
   handleImageUpload?: (file: File) => Promise<string>;
+  onChange?: (content: any) => void;
 }
 
 const MainToolbarContent = ({
@@ -207,6 +208,7 @@ export function SimpleEditor({
   editor: externalEditor,
   content = defaultContent,
   handleImageUpload = defaultHandleImageUpload,
+  onChange,
 }: SimpleEditorProps) {
   const isMobile = useMobile();
   const windowSize = useWindowSize();
@@ -259,6 +261,13 @@ export function SimpleEditor({
       Link.configure({ openOnClick: false }),
     ],
     content: content,
+    onUpdate: ({ editor }) => {
+      // Call the onChange handler with the updated content if provided
+      if (onChange) {
+        const json = editor.getJSON();
+        onChange(json);
+      }
+    },
   });
 
   // Use external editor if provided, otherwise use local editor

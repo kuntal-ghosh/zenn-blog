@@ -23,7 +23,8 @@ export async function getBlogPosts() {
         createdAt: "desc",
       },
     });
-    return NextResponse.json(posts);
+    console.log("🚀 ~ getBlogPosts ~ posts:", posts);
+    return posts;
   } catch (error) {
     console.error("Error fetching blog posts:", error);
     return NextResponse.json(
@@ -63,12 +64,13 @@ export async function getBlogPostBySlug(slug: string) {
         tags: true,
       },
     });
+    console.log("🚀 ~ getBlogPostBySlug ~ post:", post)
 
     if (!post) {
       return NextResponse.json({ message: "Post not found" }, { status: 404 });
     }
 
-    return NextResponse.json(post);
+    return post;
   } catch (error) {
     console.error("Error fetching blog post:", error);
     return NextResponse.json(

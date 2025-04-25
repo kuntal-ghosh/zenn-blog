@@ -1,0 +1,141 @@
+/* Custom CSS Variables for TipTap highlights */
+:root {
+  --tt-highlight-yellow: rgba(255, 245, 0, 0.5);
+  --tt-highlight-blue: rgba(0, 138, 255, 0.5);
+  --tt-highlight-green: rgba(0, 200, 83, 0.5);
+  --tt-highlight-pink: rgba(255, 0, 128, 0.5);
+  --tt-highlight-red: rgba(255, 0, 0, 0.5);
+  --tt-highlight-purple: rgba(150, 0, 255, 0.5);
+}
+
+/* Task list styles */
+ul[data-type="taskList"] {
+  list-style-type: none;
+  padding-left: 0;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    
+    > label {
+      flex: 0 0 auto;
+      margin-right: 0.5rem;
+      user-select: none;
+    }
+    
+    > div {
+      flex: 1 1 auto;
+      
+      > p {
+        margin: 0;
+      }
+    }
+    
+    input[type="checkbox"] {
+      cursor: pointer;
+      margin: 0.3rem 0.5rem 0 0;
+    }
+  }
+}
+
+/* Blockquote styles */
+.ProseMirror blockquote,
+.tiptap blockquote {
+  border-left: 3px solid #e9ecef;
+  padding-left: 1rem;
+  font-style: italic;
+}
+
+/* Code blocks */
+.ProseMirror pre,
+.tiptap pre {
+  background-color: #f1f3f5;
+  color: #212529;
+  border-radius: 0.25rem;
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+/* Horizontal rule */
+.ProseMirror hr,
+.tiptap hr {
+  border: none;
+  border-top: 2px solid #e9ecef;
+  margin: 2rem 0;
+}
+
+/* Link styling */
+.ProseMirror a,
+.tiptap a {
+  color: #0d6efd;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Highlight styling */
+.ProseMirror mark,
+.tiptap mark {
+  background-color: var(--tt-highlight-yellow);
+  border-radius: 0.125rem;
+  padding: 0 0.125rem;
+}
+
+/* Support for specific highlight colors */
+.ProseMirror mark[data-color="var(--tt-highlight-blue)"],
+.tiptap mark[data-color="var(--tt-highlight-blue)"] {
+  background-color: var(--tt-highlight-blue);
+}
+
+.ProseMirror mark[data-color="var(--tt-highlight-green)"],
+.tiptap mark[data-color="var(--tt-highlight-green)"] {
+  background-color: var(--tt-highlight-green);
+}
+
+.ProseMirror mark[data-color="var(--tt-highlight-pink)"],
+.tiptap mark[data-color="var(--tt-highlight-pink)"] {
+  background-color: var(--tt-highlight-pink);
+}
+
+.ProseMirror mark[data-color="var(--tt-highlight-red)"],
+.tiptap mark[data-color="var(--tt-highlight-red)"] {
+  background-color: var(--tt-highlight-red);
+}
+
+.ProseMirror mark[data-color="var(--tt-highlight-purple)"],
+.tiptap mark[data-color="var(--tt-highlight-purple)"] {
+  background-color: var(--tt-highlight-purple);
+}
+
+/* Image styles */
+.ProseMirror img,
+.tiptap img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+}
+
+/* Text alignment */
+.ProseMirror .is-text-left,
+.tiptap .is-text-left {
+  text-align: left;
+}
+
+.ProseMirror .is-text-center,
+.tiptap .is-text-center {
+  text-align: center;
+}
+
+.ProseMirror .is-text-right,
+.tiptap .is-text-right {
+  text-align: right;
+}
+
+.ProseMirror .is-text-justify,
+.tiptap .is-text-justify {
+  text-align: justify;
+}

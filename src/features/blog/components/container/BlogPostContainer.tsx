@@ -1,42 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { fetchBlogPost } from '../../api/blog-service.client';
-import { BlogPost } from '../../types';
+/**
+ * Container component for a single blog post
+ * Handles data fetching and provides data to presentational components
+ */
 
-const BlogPostContainer: React.FC = () => {
-    const router = useRouter();
-    const { slug } = router.query;
-    const [blogPost, setBlogPost] = useState<BlogPost | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+import { PostResponseDTO } from "@/core/application/dto/post-dto";
+import BlogPost from "../presentational/BlogPost";
 
-    useEffect(() => {
-        if (slug) {
-            const getBlogPost = async () => {
-                try {
-                    const post = await fetchBlogPost(slug as string);
-                    setBlogPost(post);
-                } catch (err) {
-                    setError('Failed to load blog post');
-                } finally {
-                    setLoading(false);
-                }
-            };
+interface BlogPostContainerProps {
+  slug: string;
+}
 
-            getBlogPost();
-        }
-    }, [slug]);
+async function getPost(slug: string): Promise<PostResponseDTO | null> {
+  try {
+    // In a real implementation, this would use a service or repository
+    // For now, we're using a direct fetch to the API
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/blog/posts/${slug}`, {
+      next: { revalidate: false }, // Revalidate every minute
+    });
+    
+    if (!res.ok) return null;
+    
+    return res.json();
+  } catch (error) {
+    console.error("Failed to fetch post:", error);
+    return null;
+  }
+}
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>{error}</div>;
-    if (!blogPost) return <div>Blog post not found</div>;
-
-    return (
-        <div>
-            <h1>{blogPost.title}</h1>
-            <div>{blogPost.content}</div>
-        </div>
-    );
-};
-
-export default BlogPostContainer;
+export default async function BlogPostContainer({ slug }: BlogPostContainerProps) {
+  const post = await getPost(slug);
+  console.log("🚀 ~ BlogPostContainer ~ post:", post)
+  
+  
+  if (!post) {
+    return <div className="py-8 text-center">Post not found</div>;
+  }
+  
+  return <BlogPost post={post} />;
+}

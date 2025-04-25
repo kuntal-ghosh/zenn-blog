@@ -83,3 +83,63 @@ export const convertFileToBase64 = (
     reader.readAsDataURL(file)
   })
 }
+
+/**
+ * Adds ID attributes to heading nodes in TipTap JSON content
+ * This allows the table of contents to link directly to headings
+ */
+export function addIdsToHeadings(content: any): any {
+  if (!content || typeof content !== 'object') {
+    return content;
+  }
+
+  // If this is a doc node, process its content
+  if (content.type === 'doc' && Array.isArray(content.content)) {
+    return {
+      ...content,
+      content: content.content.map(node => addIdsToHeadings(node))
+    };
+  }
+
+  // If this is a heading node, add an ID attribute
+  if (content.type === 'heading' && content.attrs) {
+    // Extract text from the heading content
+    let text = '';
+    if (Array.isArray(content.content)) {
+      text = content.content
+        .filter((textNode: any) => textNode.type === 'text')
+        .map((textNode: any) => textNode.text || '')
+        .join('');
+    }
+
+    // Generate slug for the heading
+    const slug = text
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-");
+
+    // Add the ID to the heading's attributes
+    return {
+      ...content,
+      attrs: {
+        ...content.attrs,
+        id: slug
+      },
+      // Process any nested content
+      content: Array.isArray(content.content)
+        ? content.content.map(node => addIdsToHeadings(node))
+        : content.content
+    };
+  }
+
+  // For all other nodes, process their content if it exists
+  if (Array.isArray(content.content)) {
+    return {
+      ...content,
+      content: content.content.map(node => addIdsToHeadings(node))
+    };
+  }
+
+  // Return unchanged for nodes without content
+  return content;
+}

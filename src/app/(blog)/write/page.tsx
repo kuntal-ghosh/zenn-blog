@@ -44,15 +44,16 @@ const WritePage: React.FC = () => {
         },
         body: JSON.stringify(postData),
       });
-      console.log("🚀 ~ response:", response)
 
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || "Failed to publish post");
       }
 
-      const data = await response.json();
-      console.log("🚀 ~ data:", data)
+      const responseData = await response.json();
+      
+      // Extract the post data from the success response structure
+      const post = responseData.data;
 
       // Show success toast
       toast({
@@ -62,7 +63,7 @@ const WritePage: React.FC = () => {
       });
 
       // Redirect to the published post
-      router.push(`/blog/${data.slug || data.id}`);
+      router.push(`/blog/${post.slug}`);
     } catch (error) {
       console.error("Error publishing post:", error);
 

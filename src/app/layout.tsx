@@ -49,7 +49,7 @@ export default function RootLayout({
       </head>
       <body
         className={cn(
-          "min-h-screen  font-sans ",
+          "min-h-screen bg-background text-foreground font-sans",
           fontSans.variable
         )}
       >
@@ -59,8 +59,8 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex min-h-screen flex-col">
-              <Header />
+          <div className="flex min-h-screen flex-col bg-background text-foreground">
+            <Header />
             <main className="flex-1 z-1">{children}</main>
           </div>
         </ThemeProvider>

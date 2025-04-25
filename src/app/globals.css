@@ -1,32 +1,103 @@
 @import "tailwindcss";
 @import "../styles/_variables.scss";
 @import "../styles/_keyframe-animations.scss";
-
+/* @config "../../tailwind.config.js" */
 /**
  * Zenn.dev-inspired color scheme and design
  * Tailwind v4 compatible
  * Light and dark theme
  */
 
-:root {
-  --background: 0 0% 100%; /* white */
-  --foreground: 0 0% 0%; /* black */
-  --muted: 210 40% 96.1%;
-  --muted-foreground: 215.4 16.3% 46.9%;
-  --primary: 221.2 83.2% 53.3%;
-  --primary-foreground: 210 40% 98%;
+ @custom-variant dark {
+  @media not print {
+    .dark & {
+     @slot;
+    }
+  }
+}
+ @theme  {
+  --color-background: var(--color-background);
+   --color-foreground: var(--color-foreground);
+   --color-card: var(--color-card);
+   --color-card-foreground: var(--color-card-foreground);
+   --color-popover: var(--color-popover);
+   --color-popover-foreground: var(--color-popover-foreground);
+   --color-header: var(--color-background);
+   --color-muted: var(--color-muted);
+   --color-muted-foreground: var(--color-muted-foreground);
+   --color-accent: var(--color-accent);
+   --color-accent-foreground: var(--color-accent-foreground);
+   --color-primary: var(--color-primary);
+   --color-primary-foreground: var(--color-primary-foreground);
+   --color-secondary: var(--color-secondary);
+   --color-secondary-foreground: var(--color-secondary-foreground);
+   --color-destructive: var(--color-destructive);
+   --color-destructive-foreground: var(--color-destructive-foreground);
+   --color-border: var(--color-border);
+   --color-input: var(--color-input);
+   --color-ring: var(--color-ring);
+   --radius: var(--radius);
+   --font-sans: var(--font-sans);
+   --font-mono: var(--font-mono);
+   --font-serif: var(--font-serif);
+   --font-heading: var(--font-heading);
+   --font-size-base: var(--font-size-base);
+   --font-size-lg: var(--font-size-lg);
 }
 
-.dark {
-  --background: 0 0% 0%; /* black */
-  --foreground: 0 0% 100%; /* white */
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
+@layer base {
+  :root {
+    --color-background: 255 255 255; /* pure white */
+    --color-foreground: 0 0 0; /* pure black */
+    --color-card: 255 255 255;
+    --color-card-foreground: 0 0 0;
+    --color-popover: 255 255 255;
+    --color-popover-foreground: 0 0 0;
+    --color-header: white; /* header background for light mode */
+    --color-muted: 245 249 252;
+    --color-muted-foreground: 107 119 141;
+    --color-accent: 245 249 252;
+    --color-accent-foreground: 25 33 44;
+    --color-primary: 59 130 246; /* blue */
+    --color-primary-foreground: 249 252 255;
+    --color-secondary: 245 249 252;
+    --color-secondary-foreground: 25 33 44;
+    --color-destructive: 255 92 92;
+    --color-destructive-foreground: 249 252 255;
+    --color-border: 233 236 241;
+    --color-input: 233 236 241;
+    --color-ring: 59 130 246;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --color-background: 0 0 0; /* pure black */
+    --color-foreground: 255 255 255; /* pure white */
+    --color-card: 8 8 8;
+    --color-card-foreground: 255 255 255;
+    --color-popover: 8 8 8;
+    --color-popover-foreground: 255 255 255;
+    --color-header: black; /* header background for dark mode */
+    --color-muted: 28 38 57;
+    --color-muted-foreground: 147 161 187;
+    --color-accent: 28 38 57;
+    --color-accent-foreground: 246 249 252;
+    --color-primary: 66 133 244;
+    --color-primary-foreground: 23 27 42;
+    --color-secondary: 28 38 57;
+    --color-secondary-foreground: 246 249 252;
+    --color-destructive: 119 29 29;
+    --color-destructive-foreground: 246 249 252;
+    --color-border: 28 38 57;
+    --color-input: 28 38 57;
+    --color-ring: 66 99 235;
+  }
 }
+
 
 body {
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
+  background-color: hsl(var(--color-background));
+  color: hsl(var(--color-foreground));
   font-family: var(--font-sans);
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
@@ -49,7 +120,7 @@ h6 {
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 1rem;
-  color: hsl(var(--foreground));
+  color: hsl(var(--color-foreground));
 }
 
 h1 {
@@ -82,14 +153,14 @@ p {
   margin-bottom: 1.25rem;
   font-size: 1rem;
   line-height: 1.7;
-  color: hsl(var(--foreground));
+  color: hsl(var(--color-foreground));
 }
 
 .lead {
   font-size: 1.25rem;
   line-height: 1.6;
   margin-bottom: 1.5rem;
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--color-muted-foreground));
 }
 
 .small {
@@ -98,18 +169,18 @@ p {
 }
 
 .text-muted {
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--color-muted-foreground));
 }
 
 /* Links */
 a {
-  color: hsl(var(--primary));
+  color: hsl(var(--color-primary));
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 a:hover {
-  color: hsl(var(--primary) / 0.8);
+  color: hsl(var(--color-primary) / 0.8);
   text-decoration: underline;
 }
 
@@ -126,10 +197,10 @@ li {
 
 /* Blockquotes */
 blockquote {
-  border-left: 4px solid hsl(var(--muted));
+  border-left: 4px solid hsl(var(--color-muted));
   margin: 1.5rem 0;
   padding: 0.5rem 0 0.5rem 1rem;
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--color-muted-foreground));
   font-style: italic;
 }
 
@@ -137,9 +208,36 @@ blockquote {
 code {
   font-family: var(--font-mono);
   font-size: 0.875em;
-  background-color: hsl(var(--muted));
+  background-color: hsl(var(--color-muted));
   padding: 0.2em 0.4em;
   border-radius: var(--radius);
+  color: hsl(var(--color-muted-foreground));
+}
+
+/* Use background and foreground colors */
+.bg-base {
+  background-color: hsl(var(--background));
+}
+
+.text-base {
+  color: hsl(var(--foreground));
+}
+
+/* Smooth theme transition */
+html.transition,
+html.transition *,
+html.transition *:before,
+html.transition *:after {
+  transition: all 0.3s ease;
+}
+
+/* Disable transitions when toggling theme */
+.disable-transitions {
+  transition: none !important;
+}
+
+.disable-transitions * {
+  transition: none !important;
 }
 
 /* Sticky Table of Contents */

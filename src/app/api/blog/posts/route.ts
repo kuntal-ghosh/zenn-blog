@@ -86,7 +86,6 @@ export const GET = withErrorHandling(async (request: NextRequest) => {
     sortBy: searchParams.get("sortBy") ?? "createdAt",
     sortOrder: (searchParams.get("sortOrder") ?? "desc") as "asc" | "desc",
   });
-  console.log("🚀 ~ GET ~ result:", result)
   
   // Handle adapter response
   if (!result.success) {
@@ -154,7 +153,6 @@ export const POST = withErrorHandling(async (request: NextRequest) => {
   
   // Call the adapter to get data
   const result = await blogApiAdapter.createPost(postData);
-  console.log("🚀 ~ POST ~ result:", result);
   
   // Handle adapter response
   if (!result.success) {

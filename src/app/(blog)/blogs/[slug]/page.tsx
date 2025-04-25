@@ -152,7 +152,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               </Badge>
             </div>
 
-            <div className="bg-white rounded-lg shadow-sm p-8 mb-8">
+            <div className="rounded-lg shadow-sm p-8 mb-8">
               <ReactMarkdown components={customComponents}>
                 {article.content}
               </ReactMarkdown>
